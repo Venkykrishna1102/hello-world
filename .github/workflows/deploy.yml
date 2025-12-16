@@ -1,0 +1,41 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GCP_PROJECT: $tough-forest-478407-v5
+  GKE_CLUSTER: autopilot-cluster-1
+  GKE_ZONE: us-central1
+  IMAGE: gcr.io/${{ secrets.GCP_PROJECT }}/my-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Get GKE credentials
+        run: gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1 --project tough-forest-478407-v5
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t $IMAGE:${{ github.sha }} .
+          docker push $IMAGE:${{ github.sha }}
+
+      - name: Deploy to GKE
+        run: |
+          kubectl apply -f k8s/
+          kubectl set image deployment/my-app my-app=$IMAGE:${{ github.sha }}
+          kubectl rollout status deployment/my-app
