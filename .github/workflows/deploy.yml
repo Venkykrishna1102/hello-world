@@ -9,7 +9,7 @@ env:
   GCP_PROJECT: tough-forest-478407-v5
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
-  IMAGE:  gcr.io/tough-forest-478407-v5/my-app
+  IMAGE: gcr.io/tough-forest-478407-v5/my-app
 
 jobs:
   deploy:
@@ -18,13 +18,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name:  Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
         uses:  google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets. GOOGLE_SERVICE_ACCOUNT_JSON }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install gke-gcloud-auth-plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin
 
       - name: Configure Docker authentication
         run: |
@@ -36,10 +40,10 @@ jobs:
             --region ${{ env.GKE_ZONE }} \
             --project ${{ env.GCP_PROJECT }}
 
-      - name: Build and push Docker image
+      - name:  Build and push Docker image
         run: |
           docker build -t ${{ env.IMAGE }}:${{ github.sha }} . 
-          docker push ${{ env. IMAGE }}:${{ github.sha }}
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
 
       - name: Deploy to GKE
         run: |
