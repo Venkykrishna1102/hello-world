@@ -9,7 +9,7 @@ env:
   GCP_PROJECT: molten-calling-484516-n2
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
-  IMAGE: gcr.io/molten-calling-484516-n2/my-app
+  IMAGE: us-docker.pkg.dev/molten-calling-484516-n2/apps/my-app
 
 jobs:
   deploy:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Configure Docker authentication
         run: |
-          gcloud auth configure-docker gcr.io
+          gcloud auth configure-docker us-docker.pkg.dev
 
       - name: Get GKE credentials
         run:  |
