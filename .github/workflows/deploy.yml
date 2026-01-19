@@ -34,6 +34,14 @@ jobs:
         run: |
           gcloud auth configure-docker us-docker.pkg.dev
 
+      - name: Create Artifact Registry repository if not exists
+        run: |
+          gcloud artifacts repositories create my-app \
+            --repository-format=docker \
+            --location=us-central1 \
+            --project=${{ env.GCP_PROJECT }} \
+            --quiet || true
+
       - name: Get GKE credentials
         run:  |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} \
