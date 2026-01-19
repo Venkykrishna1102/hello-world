@@ -49,7 +49,7 @@ jobs:
                  --location=us-central1 \
                  --project=${{ env.GCP_PROJECT }}
 
-      - name: Debug: list Artifact Registry repos
+      - name: Debug list Artifact Registry repos
         run: |
           echo "IMAGE=${{ env.IMAGE }}"
           gcloud artifacts repositories list --project=${{ env.GCP_PROJECT }}
