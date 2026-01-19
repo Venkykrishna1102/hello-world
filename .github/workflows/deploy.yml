@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  GCP_PROJECT: tough-forest-478407-v5
+  GCP_PROJECT: molten-calling-484516-n2
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
   IMAGE: gcr.io/tough-forest-478407-v5/my-app
