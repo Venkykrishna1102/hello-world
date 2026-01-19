@@ -38,3 +38,4 @@ To run locally:
 - Ensure your GKE cluster is running and accessible
 - Check that the Service Account has the required IAM roles (e.g., Container Registry Service Agent, Kubernetes Engine Service Agent)
 - Verify the image is pushed to GCR and the deployment is updated
+- updated info
