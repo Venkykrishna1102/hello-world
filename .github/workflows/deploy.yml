@@ -9,7 +9,7 @@ env:
   GCP_PROJECT: molten-calling-484516-n2
   GKE_CLUSTER: autopilot-cluster-1
   GKE_ZONE: us-central1
-  IMAGE: us-docker.pkg.dev/molten-calling-484516-n2/my-app
+  IMAGE: us-docker.pkg.dev/molten-calling-484516-n2/my-app/my-app
 
 jobs:
   deploy:
