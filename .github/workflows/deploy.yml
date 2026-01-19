@@ -36,7 +36,7 @@ jobs:
           # Remove this step if you prefer to enable the API manually.
           gcloud services enable artifactregistry.googleapis.com --project=${{ env.GCP_PROJECT }}
 
-      - name: Configure Docker authentication (Artifact Registry: us-central1)
+      - name: "Configure Docker authentication (Artifact Registry: us-central1)"
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
