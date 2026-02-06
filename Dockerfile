@@ -1,12 +1,10 @@
-FROM python:3.9-slim
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy the Maven-built JAR from the build step into the image
+COPY target/*.jar app.jar
 
-COPY . .
+EXPOSE 8080
 
-EXPOSE 5000
-
-CMD ["python", "app.py"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
