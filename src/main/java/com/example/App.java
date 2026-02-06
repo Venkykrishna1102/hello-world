@@ -14,7 +14,7 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", new RootHandler());
         server.setExecutor(null);
-        Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop(0)));
         System.out.println("Starting server on port " + port);
         server.start();
     }
